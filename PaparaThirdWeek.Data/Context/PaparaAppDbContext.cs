@@ -7,15 +7,13 @@ namespace PaparaThirdWeek.Data.Context
     public class PaparaAppDbContext : DbContext
     {
         public DbSet<Company> Companies { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        public PaparaAppDbContext(DbContextOptions<PaparaAppDbContext> options):base(options)
+        public PaparaAppDbContext(DbContextOptions<PaparaAppDbContext> options) : base(options)
         {
-
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
-        //public PaparaAppDbContext()
-        //{
 
-        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -26,7 +24,6 @@ namespace PaparaThirdWeek.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\\mssqllocaldb;Database=PaparaTestDb;Trusted_Connection=true");
-
         }
 
 

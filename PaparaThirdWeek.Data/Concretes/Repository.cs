@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 
 namespace PaparaThirdWeek.Data.Concretes
@@ -25,8 +24,13 @@ namespace PaparaThirdWeek.Data.Concretes
 
         public void Add(T entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
             Context.Set<T>().Add(entity);
             Context.SaveChanges();
+
         }
         public IQueryable<T> Get()
         {
@@ -35,10 +39,9 @@ namespace PaparaThirdWeek.Data.Concretes
                 .AsQueryable();
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> expression)
+        public IQueryable<T> GetAll()
         {
             return Context.Set<T>()
-                .Where(expression)
                 .AsQueryable();
         }
         public void HardRemove(T entity)
@@ -63,11 +66,10 @@ namespace PaparaThirdWeek.Data.Concretes
         }
         public void Update(T entity)
         {
-            {
                 Context.Update(entity);
                 Context.SaveChanges();
-            }
         }
 
+      
     }
 }

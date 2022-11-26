@@ -17,6 +17,9 @@ namespace PaparaThirdWeek.Api.Controllers
     {
         private readonly ICompanyService _companyService;
         private readonly IMapper _mapper;
+        private readonly ICacheService cacheService;
+        private readonly string cacheKey = $"{typeof(CompanyController)}";
+
 
         public CompanyController(ICompanyService companyService, IMapper mapper)
         {
@@ -66,6 +69,7 @@ namespace PaparaThirdWeek.Api.Controllers
             newCompany.IsDeleted = false;
 
             await _companyService.Add(newCompany);
+            cacheService.Remove(cacheKey);
             return Ok();
         }
 
@@ -75,6 +79,8 @@ namespace PaparaThirdWeek.Api.Controllers
             await _companyService.Delete(id);
             return Ok();
         }
+
+     
 
 
     }
